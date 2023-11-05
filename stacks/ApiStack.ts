@@ -6,6 +6,7 @@ export function ApiStack({ stack }: StackContext) {
 
   const api = new Api(stack, 'Api', {
     defaults: {
+      authorizer: 'iam',
       function: {
         bind: [table],
       },
@@ -15,7 +16,7 @@ export function ApiStack({ stack }: StackContext) {
       'GET /todos':         'packages/functions/src/list.main',
       'GET /todos/{id}':    'packages/functions/src/get.main',
       'PUT /todos/{id}':    'packages/functions/src/update.main',
-      'DELETE /todos/{id}': 'packages/functions/src/delete.main,
+      'DELETE /todos/{id}': 'packages/functions/src/delete.main',
     },
   });
 

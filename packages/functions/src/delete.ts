@@ -6,7 +6,7 @@ export const main = handler(async (event) => {
   const params = {
     TableName: Table.Todos.tableName,
     Key: {
-      userId: 'random-uuid',
+      userId: event.requestContext.authorizer?.iam.cognitoIdentity.identityId,
       todoId: event?.pathParameters?.id,
     },
   };

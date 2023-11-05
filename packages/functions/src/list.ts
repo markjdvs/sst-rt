@@ -7,7 +7,7 @@ export const main = handler(async (event) => {
     TableName: Table.Todos.tableName,
     KeyConditionExpression: 'userId = :userId',
     ExpressionAttributeValues: {
-      ':userId': 'random-uuid',
+      ':userId': event.requestContext.authorizer?.iam.cognitoIdentity.identityId,
     }
   };
 
