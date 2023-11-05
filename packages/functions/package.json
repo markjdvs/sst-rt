@@ -1,0 +1,21 @@
+{
+  "name": "@todos/functions",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "sst bind vitest",
+    "typecheck": "tsc -noEmit"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.125",
+    "@types/node": "^20.8.10",
+    "@types/uuid": "^9.0.6",
+    "sst": "^2.33.4",
+    "vitest": "^0.34.6"
+  },
+  "dependencies": {
+    "aws-lambda": "^1.0.7",
+    "aws-sdk": "^2.1488.0",
+    "uuid": "^9.0.1"
+  }
+}
