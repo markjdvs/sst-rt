@@ -11,7 +11,11 @@ export function ApiStack({ stack }: StackContext) {
       },
     },
     routes: {
-      'POST /todos': 'packages/functions/src/create.main',
+      'POST /todos':        'packages/functions/src/create.main',
+      'GET /todos':         'packages/functions/src/list.main',
+      'GET /todos/{id}':    'packages/functions/src/get.main',
+      'PUT /todos/{id}':    'packages/functions/src/update.main',
+      'DELETE /todos/{id}': 'packages/functions/src/delete.main,
     },
   });
 

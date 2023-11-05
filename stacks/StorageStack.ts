@@ -8,7 +8,10 @@ export function StorageStack({ stack }: StackContext) {
       userId: 'string',
       todoId: 'string',  
     },
-    primaryIndex: { partitionKey: 'userId', sortKey: 'todoId' },
+    primaryIndex: {
+      partitionKey: 'userId',
+      sortKey: 'todoId'
+    },
   });
 
   return {

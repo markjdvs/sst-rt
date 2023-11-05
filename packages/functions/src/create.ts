@@ -1,57 +1,30 @@
-import AWS from 'aws-sdk';
 import * as uuid from 'uuid';
-import { APIGatewayProxyEvent } from 'aws-lambda';
-
 import { Table } from 'sst/node/table';
+import handler from '@todos/core/src/handler';
+import dynamoDB from '@todos/core/src/dynamodb';
 
-const dynamoDB = new AWS.DynamoDB.DocumentClient();
+export const main = handler(async (event) => {
+  let data = {
+    content: '',
+    attachment: '',
+  }
 
-export async function main(event: APIGatewayProxyEvent) {
-  let data, params;
-
-  if (event.body) {
-    // some validation needed unless this is handled elsewhere
-
+  if (event.body != null) {
     data = JSON.parse(event.body);
-    params = {
-      TableName: Table.Todos.tableName,
-      Item: {
-        userId: 'random-uuid',
-        todoId: uuid.v1(),
-        content: data.content,
-        attachment: data.attachment,
-        createdAt: Date.now(),
-      },
-    }
-  } else {
-    return {
-      statusCode: 404,
-      body: JSON.stringify({ error: true }),
-    };
   }
 
-  try {
-    // interesting to play around without promises - otherwise we're call the stack
-    await dynamoDB.put(params).promise();
+  const params = {
+    TableName: Table.Todos.tableName,
+    Item: {
+      userId: 'random-uuid',
+      todoId: uuid.v1(),
+      content: data.content,
+      attachment: data.attachment,
+      createdAt: Date.now(),
+    },
+  };
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify(params.Item),
-    }
-  } catch (error) {
-    let message;
+  await dynamoDB.put(params);
 
-    if (error instanceof Error) {
-      message = error.message;
-    } else {
-      message = String(error);
-    }
-
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: message })
-    }
-  }
-}
-
-// todoId: afb540d0-7be6-11ee-89fa-55b250416893
+  return JSON.stringify(params.Item);
+});
